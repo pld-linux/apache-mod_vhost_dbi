@@ -1,4 +1,4 @@
-# $Rev$, $Date: 2005-09-13 09:57:30 $
+# $Rev$, $Date: 2005-09-13 11:40:29 $
 %define		mod_name	vhost_dbi
 %define 	apxs		/usr/sbin/apxs
 Summary:	mod_vhost_dbi - dynamic virtual hosting using database to store information
@@ -18,12 +18,12 @@ BuildRequires:	apache-devel >= 2.0.40
 BuildRequires:	apache-mod_dbi_pool-devel >= 0.4.0
 BuildRequires:	libtool
 BuildRequires:	sed
-Requires(post,preun):	%{apxs}
 Requires:	apache >= 2.0.40
 Requires:	apache-mod_dbi_pool >= 0.4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_pkglibdir	%(%{apxs} -q LIBEXECDIR)
+%define         _sysconfdir     %(%{apxs} -q SYSCONFDIR 2>/dev/null)
+%define         _pkglibdir      %(%{apxs} -q LIBEXECDIR 2>/dev/null)
 
 %description
 mod_vhost_dbi creates virtual hosts for Apache 2.0 completely
@@ -53,22 +53,24 @@ sed -i -e 's,test_paths="/usr/lib /usr/local/lib",test_paths="/usr/%{_lib} /usr/
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_pkglibdir},%{_includedir}/apache}
+install -d $RPM_BUILD_ROOT{%{_pkglibdir},%{_includedir}/apache,%{_sysconfdir}/httpd.conf}
 
 install src/mod_%{mod_name}.so $RPM_BUILD_ROOT%{_pkglibdir}
+cat <<'EOF' > $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf/79_%{mod_name}.conf
+LoadModule %{mod_name}_module        modules/mod_%{mod_name}.so
+# vim: filetype=apache ts=4 sw=4 et
+EOF
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post
-%{apxs} -e -a -n %{mod_name} %{_pkglibdir}/mod_%{mod_name}.so 1>&2
 if [ -f /var/lock/subsys/httpd ]; then
 	/etc/rc.d/init.d/httpd restart 1>&2
 fi
 
 %preun
 if [ "$1" = "0" ]; then
-	%{apxs} -e -A -n %{mod_name} %{_pkglibdir}/mod_%{mod_name}.so 1>&2
 	if [ -f /var/lock/subsys/httpd ]; then
 		/etc/rc.d/init.d/httpd restart 1>&2
 	fi
