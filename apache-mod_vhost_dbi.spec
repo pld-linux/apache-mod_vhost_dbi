@@ -1,4 +1,4 @@
-# $Rev$, $Date: 2005-04-12 19:12:28 $
+# $Rev$, $Date: 2005-09-13 09:57:30 $
 %define		mod_name	vhost_dbi
 %define 	apxs		/usr/sbin/apxs
 Summary:	mod_vhost_dbi - dynamic virtual hosting using database to store information
@@ -17,6 +17,7 @@ BuildRequires:	automake
 BuildRequires:	apache-devel >= 2.0.40
 BuildRequires:	apache-mod_dbi_pool-devel >= 0.4.0
 BuildRequires:	libtool
+BuildRequires:	sed
 Requires(post,preun):	%{apxs}
 Requires:	apache >= 2.0.40
 Requires:	apache-mod_dbi_pool >= 0.4.0
@@ -42,6 +43,9 @@ konfiguracyjnego czy restartowania Apache'a po zmianie vhosta.
 %{__aclocal} -I m4
 %{__autoconf}
 %{__automake}
+
+sed -i -e 's,test_paths="/usr/lib /usr/local/lib",test_paths="/usr/%{_lib} /usr/lib",g' configure
+
 %configure \
         --with-apxs=%{apxs}
 %{__make}
