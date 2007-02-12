@@ -1,7 +1,7 @@
 %define		mod_name	vhost_dbi
 %define 	apxs		/usr/sbin/apxs
 Summary:	mod_vhost_dbi - dynamic virtual hosting using database to store information
-Summary(pl.UTF-8):   mod_vhost_dbi - dynamiczne hosty wirtualne z informacjami trzymanymi w bazie danych
+Summary(pl.UTF-8):	mod_vhost_dbi - dynamiczne hosty wirtualne z informacjami trzymanymi w bazie danych
 Name:		apache-mod_%{mod_name}
 Version:	0.1.0
 Release:	1
