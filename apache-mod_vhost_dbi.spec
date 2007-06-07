@@ -10,7 +10,7 @@ Group:		Networking/Daemons
 Source0:	http://www.outoforder.cc/downloads/mod_vhost_dbi/mod_%{mod_name}-%{version}.tar.bz2
 # Source0-md5:	fd70c654e6b2e78280acb4643207ab68
 URL:		http://www.outoforder.cc/projects/apache/mod_vhost_dbi/
-BuildRequires:	%{apxs}
+BuildRequires:	apache-apxs >= 2.0.40
 BuildRequires:	apache-devel >= 2.0.40
 BuildRequires:	apache-mod_dbi_pool-devel >= 0.4.0
 BuildRequires:	autoconf
