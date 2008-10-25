@@ -6,7 +6,7 @@ Name:		apache-mod_%{mod_name}
 Version:	0.1.0
 Release:	1
 License:	GPL
-Group:		Networking/Daemons
+Group:		Networking/Daemons/HTTP
 Source0:	http://www.outoforder.cc/downloads/mod_vhost_dbi/mod_%{mod_name}-%{version}.tar.bz2
 # Source0-md5:	fd70c654e6b2e78280acb4643207ab68
 URL:		http://www.outoforder.cc/projects/apache/mod_vhost_dbi/
